@@ -1,0 +1,45 @@
+
+
+
+
+
+
+
+# config/packages/security.yaml
+security:
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
+
+    # ...
+
+    providers:
+    #regla1 es el nombre de mi provider, le puedes poner el que quieras
+        regla1:
+            entity:
+                class: App\Entity\User
+                property: username
+                # if you're using multiple entity managers
+                # manager_name: customer
+
+    firewalls:
+
+        main:
+            pattern: ^/
+            anonymous: ~
+            form_login:
+                login_path: login
+                check_path: login
+
+            logout:
+                path:   /logout
+                target: /
+
+            # ...
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+
+        - { path: ^/admin, roles: ROLE_USER }
+        # - { path: ^/profile, roles: ROLE_USER }
